@@ -7,6 +7,8 @@ from .error_schema import register_validation_error_handler
 
 # Importa os módulos de rotas
 from .apis.account_user_api import account_user_api
+from .apis.owner_pokemon_api import owner_pokemon_api
+
 
 info = Info(
     title="Minha API de Amigurumi",
@@ -28,6 +30,7 @@ register_validation_error_handler(app)
 
 # Registro das APIs
 app.register_api(account_user_api)
+app.register_api(owner_pokemon_api)
 
 
 

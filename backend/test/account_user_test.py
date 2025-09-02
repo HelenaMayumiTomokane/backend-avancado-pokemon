@@ -22,10 +22,7 @@ def client():
 
 # ---------------- Teste POST ----------------
 def test_add_user(client):
-    response = client.post(
-        "/account_user/",  # barra no final
-        json={"login": "novo_user", "password": "abcd", "role": "user", "name":"test" }
-    )
+    response = client.post( "/account_user/", json={"login": "novo_user", "password": "abcd", "role": "user", "name":"test" })
     assert response.status_code == 200
     data = response.get_json()
     assert "message" in data
@@ -33,7 +30,7 @@ def test_add_user(client):
 
 
 # ---------------- Teste GET ----------------
-def test_get_all_users(client):
+def test_get_all_user(client):
     with app.app_context():
         user = AccountUser(login="teste", password="1234", role="user", name ="test")
         db.session.add(user)
@@ -55,10 +52,7 @@ def test_update_user(client):
         user_id = user.user_id  # pegar ID
 
     # Usar somente o ID na requisição
-    response = client.put(
-        "/account_user/",
-        json={"user_id": user_id, "login": "atualizado", "password": "4321", "role": "admin", "name": "test"}
-    )
+    response = client.put("/account_user/", json={"user_id": user_id, "login": "atualizado", "password": "4321", "role": "admin", "name": "test"})
     assert response.status_code == 200
     data = response.get_json()
     assert data["message"] == f"Usuário {user_id} atualizado com sucesso!"
@@ -75,10 +69,7 @@ def test_delete_user(client):
         user_id = user.user_id  # pegar ID
 
     # Usar somente o ID na requisição
-    response = client.delete(
-        "/account_user/",
-        json={"user_id": user_id}
-    )
+    response = client.delete("/account_user/",json={"user_id": user_id})
     assert response.status_code == 200
     data = response.get_json()
     # Corrigido para a mensagem real da API
