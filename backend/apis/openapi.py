@@ -1,10 +1,7 @@
 from flask import request, redirect
-from flask_openapi3 import Tag
-
-openapi_tag = Tag(name="openapi", description="Rotas para documentação OpenAPI")
 
 def register_openapi_routes(app):
-    @app.get('/openapi', tags=[openapi_tag])
+    @app.get('/openapi')
     def openapi():
         doc_type = request.args.get('doc', 'swagger') 
 

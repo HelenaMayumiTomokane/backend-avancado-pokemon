@@ -8,13 +8,10 @@ from .error_schema import register_validation_error_handler
 # Importa os módulos de rotas
 from .apis.account_user_api import account_user_api
 from .apis.owner_pokemon_api import owner_pokemon_api
+from .apis.user_bag_api import user_bag_api
+from .apis.cash_audit_api import cash_audit_api
 
-
-info = Info(
-    title="Minha API de Amigurumi",
-    version="1.0.0",
-    description="API para gerenciar informações dos Amigurumis"
-)
+info = Info(title="Minha API de Pokemon",version="1.0.0", description="API para gerenciar informações dos Pokemons")
 
 app = OpenAPI(__name__, info=info)
 CORS(app)
@@ -31,7 +28,8 @@ register_validation_error_handler(app)
 # Registro das APIs
 app.register_api(account_user_api)
 app.register_api(owner_pokemon_api)
-
+app.register_api(user_bag_api)
+app.register_api(cash_audit_api)
 
 
 if __name__ == '__main__':

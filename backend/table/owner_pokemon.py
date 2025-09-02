@@ -4,12 +4,12 @@ from datetime import date
 
 class OwnerPokemon(db.Model):
     """
-    A tabela Account User é uma tabela destinada a guardas os dados básicos do usuário
+    A tabela Owner Pokemon é uma tabela destinada a guardas os dados de cada pokemon capturado por cada usuário
     """
     __tablename__ = 'owner_pokemon'
 
     date = db.Column(db.Date, default=date.today, nullable=True, 
-                    info={"description": "registro da data de criação do usuário"})
+                    info={"description": "registro da data de captura do pokemon"})
 
     pokemon_id = db.Column(db.Integer, primary_key=True, autoincrement=True, 
                     info={"description": "chave primária dos pokemons capturados"})

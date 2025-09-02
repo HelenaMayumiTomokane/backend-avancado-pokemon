@@ -1,6 +1,8 @@
 
 from .table.account_user import AccountUser
 from .table.owner_pokemon import OwnerPokemon
+from .table.user_bag import UserBag
+from .table.cash_audit import CashAudit
 from pydantic import create_model, Field, BaseModel
 from typing import Optional
 from sqlalchemy.inspection import inspect
@@ -28,6 +30,8 @@ def bringAllCollumns(model_class):
 
 AccountUserSchema_All = bringAllCollumns(AccountUser)
 OwnerPokemonSchema_All = bringAllCollumns(OwnerPokemon)
+UserBagSchema_All = bringAllCollumns(UserBag)
+CashAuditSchema_All = bringAllCollumns(CashAudit)
 
 
 #---------------------------------------------------------------------------#
@@ -53,6 +57,8 @@ def bringOnlyNoPrimaryKeyCollumns(model_class):
 
 AccountUserSchema_No_Auto = bringOnlyNoPrimaryKeyCollumns(AccountUser)
 OwnerPokemonSchema_No_Auto = bringOnlyNoPrimaryKeyCollumns(OwnerPokemon)
+UserBagSchema_No_Auto = bringOnlyNoPrimaryKeyCollumns(UserBag)
+CashAuditSchema_No_Auto = bringOnlyNoPrimaryKeyCollumns(CashAudit)
 
 
 
@@ -78,3 +84,5 @@ def bringOnlyPrimaryKey(model_class):
 
 AccountUserSchema_PrimaryKey = bringOnlyPrimaryKey(AccountUser)
 OwnerPokemonSchema_PrimaryKey = bringOnlyPrimaryKey(OwnerPokemon)
+UserBagSchema_PrimaryKey = bringOnlyPrimaryKey(UserBag)
+CashAuditSchema_PrimaryKey = bringOnlyPrimaryKey(CashAudit)
