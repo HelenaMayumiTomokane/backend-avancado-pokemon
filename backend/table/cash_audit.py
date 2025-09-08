@@ -9,7 +9,7 @@ class CashAudit(db.Model):
     __tablename__ = 'cash_audit'
 
     date = db.Column(db.Date, default=date.today, nullable=True, 
-                    info={"description": "registro da data de captura do pokemon"})
+                    info={"description": "registro da data da operação de cash"})
 
     cash_id = db.Column(db.Integer, primary_key=True, autoincrement=True, 
                     info={"description": "chave primária das transações realizadas"})
