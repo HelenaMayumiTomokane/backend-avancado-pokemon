@@ -22,22 +22,35 @@ def client():
 
 # ---------------- Teste POST ----------------
 def test_add_user(client):
-    response = client.post( "/account_user/", json={"login": "novo_user", "password": "abcd", "role": "user", "name":"test" })
+    response = client.post( "/account_user", json={"login": "novo_user", "password": "abcd", "role": "user", "name":"test" })
     assert response.status_code == 200
     data = response.get_json()
     assert "message" in data
     assert data["user_id"] > 0
 
 
-# ---------------- Teste GET ----------------
-def test_get_all_user(client):
+# ---------------- Teste GET por login e senha ----------------
+def test_get_user_by_login_password(client):
     with app.app_context():
-        user = AccountUser(login="teste", password="1234", role="user", name ="test")
+        user = AccountUser(login="teste", password="1234", role="user", name="test")
         db.session.add(user)
         db.session.commit()
 
-    response = client.get("/account_user/")  # barra no final
+    response = client.get("/account_user/login_password?login=teste&password=1234")
     assert response.status_code == 200
+
+
+# ---------------- Teste GET por ID ----------------
+def test_get_account_user_by_id(client):
+    with app.app_context():
+        user = AccountUser(login="teste", password="1234", role="user", name="test")
+        db.session.add(user)
+        db.session.commit()
+        user_id = user.user_id
+
+    response = client.get(f"/account_user/user_id?user_id={user_id}") 
+    assert response.status_code == 200
+
 
 # ---------------- Teste PUT ----------------
 def test_update_user(client):
@@ -48,7 +61,7 @@ def test_update_user(client):
         user_id = user.user_id  # pegar ID
 
     # Usar somente o ID na requisição
-    response = client.put("/account_user/", json={"user_id": user_id, "login": "atualizado", "password": "4321", "role": "admin", "name": "test"})
+    response = client.put("/account_user", json={"user_id": user_id, "login": "atualizado", "password": "4321", "role": "admin", "name": "test"})
     assert response.status_code == 200
 
 
@@ -62,5 +75,5 @@ def test_delete_user(client):
         user_id = user.user_id  # pegar ID
 
     # Usar somente o ID na requisição
-    response = client.delete("/account_user/",json={"user_id": user_id})
+    response = client.delete("/account_user",json={"user_id": user_id})
     assert response.status_code == 200

@@ -29,7 +29,7 @@ def test_add_user_bag(client):
     db.session.commit()
     user_id = user.user_id  # pegar ID
 
-    response = client.post( "/user_bag/", json={"operation": "input", "user_id": user_id,"item_id":1,"pokemon_id": 0})
+    response = client.post( "/user_bag", json={"operation": "input", "user_id": user_id,"item_id":1,"pokemon_id": 0})
     assert response.status_code == 200
 
 
@@ -40,7 +40,7 @@ def test_get_all_user_bag(client):
         db.session.add(bag)
         db.session.commit()
 
-    response = client.get("/user_bag/")  # barra no final
+    response = client.get("/user_bag")  # barra no final
     assert response.status_code == 200
 
 # ---------------- Teste PUT ----------------
@@ -52,7 +52,7 @@ def test_update_user_bag(client):
         bag_id = bag.bag_id  # pegar ID
 
     # Usar somente o ID na requisição
-    response = client.put("/user_bag/",json={"bag_id":bag_id ,"operation": "input", "user_id": 1,"item_id":1,"pokemon_id":1})
+    response = client.put("/user_bag",json={"bag_id":bag_id ,"operation": "input", "user_id": 1,"item_id":1,"pokemon_id":1})
     assert response.status_code == 200
 
 # ---------------- Teste DELETE ----------------
@@ -65,5 +65,5 @@ def test_delete_user_bag(client):
         bag_id = bag.bag_id  # pegar ID
 
     # Usar somente o ID na requisição
-    response = client.delete("/user_bag/", json={"bag_id": bag_id})
+    response = client.delete("/user_bag", json={"bag_id": bag_id})
     assert response.status_code == 200

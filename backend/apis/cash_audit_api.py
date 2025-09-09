@@ -11,7 +11,7 @@ from ..error_schema import ValidationErrorResponse
 cash_audit_api = APIBlueprint('cash_audit_api', __name__, url_prefix='/cash_audit')
 cash_audit_tag = Tag(name="Itens na Bag", description="Itens disponíveis ou consumidos da Bag")
 
-@cash_audit_api.get('/', tags=[cash_audit_tag],responses={"200": CashAuditSchema_All, "422": ValidationErrorResponse},
+@cash_audit_api.get('', tags=[cash_audit_tag],responses={"200": CashAuditSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para puxar todos os item")
 def get_all_cash_audit():
     cash_audit = CashAudit.query.order_by(desc(CashAudit.user_id)).all()
@@ -22,7 +22,7 @@ def get_all_cash_audit():
     return jsonify(result)
 
 
-@cash_audit_api.post('/', tags=[cash_audit_tag],responses={"200": CashAuditSchema_No_Auto, "422": ValidationErrorResponse},
+@cash_audit_api.post('', tags=[cash_audit_tag],responses={"200": CashAuditSchema_No_Auto, "422": ValidationErrorResponse},
          summary="Requisição para cadastrar cadastrar a entrada ou saída de um item")
 def add_cash_audit(body: CashAuditSchema_No_Auto):
     data = body.model_dump()
@@ -40,7 +40,7 @@ def add_cash_audit(body: CashAuditSchema_No_Auto):
         })
 
 
-@cash_audit_api.put('/', tags=[cash_audit_tag],responses={"200": CashAuditSchema_All, "422": ValidationErrorResponse},
+@cash_audit_api.put('', tags=[cash_audit_tag],responses={"200": CashAuditSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para alterar os dados dos items")
 def update_cash_audit(body: CashAuditSchema_All):
     data = body.model_dump()
@@ -62,7 +62,7 @@ def update_cash_audit(body: CashAuditSchema_All):
     })
 
 
-@cash_audit_api.delete('/', tags=[cash_audit_tag],responses={"200": CashAuditSchema_PrimaryKey, "422": ValidationErrorResponse},
+@cash_audit_api.delete('', tags=[cash_audit_tag],responses={"200": CashAuditSchema_PrimaryKey, "422": ValidationErrorResponse},
          summary="Requisição para deletar um pokemons de um usuário")
 def delete_cash_audit(body: CashAuditSchema_PrimaryKey):
     data = body.model_dump()

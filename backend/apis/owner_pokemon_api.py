@@ -11,7 +11,7 @@ from ..error_schema import ValidationErrorResponse
 owner_pokemon_api = APIBlueprint('owner_pokemon_api', __name__, url_prefix='/owner_pokemon')
 owner_pokemon_tag = Tag(name="Pokemon e seus Donos", description="Operação relacionando o pokemon e seu dono")
 
-@owner_pokemon_api.get('/', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_All, "422": ValidationErrorResponse},
+@owner_pokemon_api.get('', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para puxar todos os pokemons adotados")
 def get_all_owner_pokemon():
     owner_pokemon = OwnerPokemon.query.order_by(desc(OwnerPokemon.user_id)).all()
@@ -22,7 +22,7 @@ def get_all_owner_pokemon():
     return jsonify(result)
 
 
-@owner_pokemon_api.post('/', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_No_Auto, "422": ValidationErrorResponse},
+@owner_pokemon_api.post('', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_No_Auto, "422": ValidationErrorResponse},
          summary="Requisição para cadastrar novos pokemons de um usuários")
 def add_owner_pokemon(body: OwnerPokemonSchema_No_Auto):
     data = body.model_dump()
@@ -40,7 +40,7 @@ def add_owner_pokemon(body: OwnerPokemonSchema_No_Auto):
         })
 
 
-@owner_pokemon_api.put('/', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_All, "422": ValidationErrorResponse},
+@owner_pokemon_api.put('', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para alterar dados do pokemon de um usuário")
 def update_owner_pokemon(body: OwnerPokemonSchema_All):
     data = body.model_dump()
@@ -62,7 +62,7 @@ def update_owner_pokemon(body: OwnerPokemonSchema_All):
     })
 
 
-@owner_pokemon_api.delete('/', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_PrimaryKey, "422": ValidationErrorResponse},
+@owner_pokemon_api.delete('', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_PrimaryKey, "422": ValidationErrorResponse},
          summary="Requisição para deletar um pokemons de um usuário")
 def delete_owner_pokemon(body: OwnerPokemonSchema_PrimaryKey):
     data = body.model_dump()

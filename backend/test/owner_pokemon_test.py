@@ -40,7 +40,7 @@ def test_get_all_owner_pokemon(client):
         db.session.add(pokemon)
         db.session.commit()
 
-    response = client.get("/owner_pokemon/")  # barra no final
+    response = client.get("/owner_pokemon")  # barra no final
     assert response.status_code == 200
 
 
