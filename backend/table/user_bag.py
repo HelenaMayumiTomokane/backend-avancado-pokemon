@@ -14,13 +14,13 @@ class UserBag(db.Model):
     bag_id = db.Column(db.Integer, primary_key=True, autoincrement=True, 
                     info={"description": "chave primária das transações realizadas"})
     
-    operation = db.Column(db.String, nullable=False, 
+    operation_type = db.Column(db.String, nullable=False, 
                     info={"description": "descrição se a operação é um input ou output"})
     
     user_id = db.Column(db.Integer, nullable=False, 
                     info={"description": "id do usuário que capturou o pokemon"})
     
-    item_id = db.Column(db.Integer, nullable=False, 
+    item_id = db.Column(db.String, nullable=False, 
                     info={"description": "item utilizado"})
     
     pokemon_id = db.Column(db.Integer, nullable=True, 

@@ -27,7 +27,7 @@ def get_all_user_bag():
          summary="Requisição para cadastrar cadastrar a entrada ou saída de um item")
 def add_user_bag(body: UserBagSchema_No_Auto):
     data = body.model_dump()
-    user_id = data.get('user_id')
+    user_id = int(data.get('user_id'))
     user = AccountUser.query.filter_by(user_id=user_id).first()
 
     if user:    
