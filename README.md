@@ -9,4 +9,4 @@ Passo a Passo para Criar novas Tabelas
 
 Para rodar todo o backend => python -m backend.app
 
-Para acessar a Documentação do Projeto -> http://127.0.0.1:5000/openapi/
+Para acessar a Documentação do Projeto -> http://127.0.0.1:5000/openapi

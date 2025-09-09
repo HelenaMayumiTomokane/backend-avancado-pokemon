@@ -9,7 +9,7 @@ from ..schema import (CashAuditSchema_All, CashAuditSchema_No_Auto, CashAuditSch
 from ..error_schema import ValidationErrorResponse
 
 cash_audit_api = APIBlueprint('cash_audit_api', __name__, url_prefix='/cash_audit')
-cash_audit_tag = Tag(name="Itens na Bag", description="Itens disponíveis ou consumidos da Bag")
+cash_audit_tag = Tag(name="Histórico de Cash", description="Entradas e saídas de dinheiro Pokemon")
 
 @cash_audit_api.get('', tags=[cash_audit_tag],responses={"200": CashAuditSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para puxar todos os item")
