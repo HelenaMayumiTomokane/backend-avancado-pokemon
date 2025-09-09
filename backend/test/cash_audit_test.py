@@ -29,37 +29,38 @@ def test_add_cash_audit(client):
     db.session.commit()
     user_id = user.user_id  # pegar ID
 
-    response = client.post( "/cash_audit", json={"operation": "input", "user_id": user_id,"value":1})
+    response = client.post( "/cash_audit", json={"operation_type": "input", "user_id": user_id,"value":1})
     assert response.status_code == 200
 
 
 # ---------------- Teste GET ----------------
 def test_get_all_cash_audit(client):
     with app.app_context():
-        cash = CashAudit(value=1, user_id=1,operation = "input")
+        cash = CashAudit(value=1, user_id=1,operation_type = "input")
         db.session.add(cash)
         db.session.commit()
+        user_id = cash.user_id  # pegar ID
 
-    response = client.get("/cash_audit")  # barra no final
+    response = client.get(f"/cash_audit/user_id?user_id={user_id}")  # barra no final
     assert response.status_code == 200
 
 # ---------------- Teste PUT ----------------
 def test_update_cash_audit(client):
     with app.app_context():
-        cash = CashAudit(value=1, user_id=1, operation = "input")
+        cash = CashAudit(value=1, user_id=1, operation_type = "input")
         db.session.add(cash)
         db.session.commit()
         cash_id = cash.cash_id  # pegar ID
 
     # Usar somente o ID na requisição
-    response = client.put("/cash_audit",json={"cash_id":cash_id ,"operation": "input", "user_id": 1,"value":1})
+    response = client.put("/cash_audit",json={"cash_id":cash_id ,"operation_type": "input", "user_id": 1,"value":1})
     assert response.status_code == 200
 
 # ---------------- Teste DELETE ----------------
 def test_delete_cash_audit(client):
     # Criar usuário no contexto do app
     with app.app_context():
-        cash = CashAudit(value=1, user_id=1, operation = "input")
+        cash = CashAudit(value=1, user_id=1, operation_type = "input")
         db.session.add(cash)
         db.session.commit()
         cash_id = cash.cash_id  # pegar ID

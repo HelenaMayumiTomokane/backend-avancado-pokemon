@@ -39,8 +39,9 @@ def test_get_all_user_bag(client):
         bag = UserBag(item_id=1, user_id=1, pokemon_id= 1,operation = "input")
         db.session.add(bag)
         db.session.commit()
+        user_id = bag.user_id  # pegar ID
 
-    response = client.get("/user_bag")  # barra no final
+    response = client.get(f"/user_bag/user_id?user_id={user_id}")  # barra no final
     assert response.status_code == 200
 
 # ---------------- Teste PUT ----------------

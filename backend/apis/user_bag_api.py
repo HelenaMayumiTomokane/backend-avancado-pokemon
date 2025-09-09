@@ -1,5 +1,5 @@
 from flask_openapi3 import Tag, APIBlueprint
-from flask import jsonify
+from flask import jsonify,request
 from sqlalchemy import desc
 
 from ..database import db
@@ -11,10 +11,11 @@ from ..error_schema import ValidationErrorResponse
 user_bag_api = APIBlueprint('user_bag_api', __name__, url_prefix='/user_bag')
 user_bag_tag = Tag(name="Itens na Bag", description="Itens disponíveis ou consumidos da Bag")
 
-@user_bag_api.get('/', tags=[user_bag_tag],responses={"200": UserBagSchema_All, "422": ValidationErrorResponse},
+@user_bag_api.get('/user_id', tags=[user_bag_tag],responses={"200": UserBagSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para puxar todos os item")
 def get_all_user_bag():
-    user_bag = UserBag.query.order_by(desc(UserBag.user_id)).all()
+    user_id = request.args.get('user_id')
+    user_bag = UserBag.query.filter_by(user_id=user_id).all()
     result = [
         {k: v for k, v in user.__dict__.items() if not k.startswith('_')}
         for user in user_bag
@@ -22,7 +23,7 @@ def get_all_user_bag():
     return jsonify(result)
 
 
-@user_bag_api.post('/', tags=[user_bag_tag],responses={"200": UserBagSchema_No_Auto, "422": ValidationErrorResponse},
+@user_bag_api.post('', tags=[user_bag_tag],responses={"200": UserBagSchema_No_Auto, "422": ValidationErrorResponse},
          summary="Requisição para cadastrar cadastrar a entrada ou saída de um item")
 def add_user_bag(body: UserBagSchema_No_Auto):
     data = body.model_dump()
@@ -40,7 +41,7 @@ def add_user_bag(body: UserBagSchema_No_Auto):
         })
 
 
-@user_bag_api.put('/', tags=[user_bag_tag],responses={"200": UserBagSchema_All, "422": ValidationErrorResponse},
+@user_bag_api.put('', tags=[user_bag_tag],responses={"200": UserBagSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para alterar os dados dos items")
 def update_user_bag(body: UserBagSchema_All):
     data = body.model_dump()
@@ -62,7 +63,7 @@ def update_user_bag(body: UserBagSchema_All):
     })
 
 
-@user_bag_api.delete('/', tags=[user_bag_tag],responses={"200": UserBagSchema_PrimaryKey, "422": ValidationErrorResponse},
+@user_bag_api.delete('', tags=[user_bag_tag],responses={"200": UserBagSchema_PrimaryKey, "422": ValidationErrorResponse},
          summary="Requisição para deletar um pokemons de um usuário")
 def delete_user_bag(body: UserBagSchema_PrimaryKey):
     data = body.model_dump()
