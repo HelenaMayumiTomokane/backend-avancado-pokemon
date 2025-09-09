@@ -29,45 +29,46 @@ def test_add_owner_pokemon(client):
     db.session.commit()
     user_id = user.user_id  # pegar ID
 
-    response = client.post( "/owner_pokemon/", json={"pokemon_id_external_api": 1, "user_id": user_id,"pokemon_name":"test" })
+    response = client.post( "/owner_pokemon", json={"pokemon_id_external_api": 1, "user_id": user_id,"pokemon_name":"test","pokemon_species":"test"})
     assert response.status_code == 200
 
 
 # ---------------- Teste GET ----------------
 def test_get_all_owner_pokemon(client):
     with app.app_context():
-        pokemon = OwnerPokemon(pokemon_id_external_api=1, user_id=1, pokemon_name="teste")
+        pokemon = OwnerPokemon(pokemon_id_external_api=1, user_id=1, pokemon_name="teste",pokemon_species="test")
         db.session.add(pokemon)
         db.session.commit()
+        
 
-    response = client.get("/owner_pokemon")  # barra no final
+    response = client.get(f"/owner_pokemon/user_id?user_id={1}")  # barra no final
     assert response.status_code == 200
 
 
 # ---------------- Teste PUT ----------------
 def test_update_owner_pokemon(client):
     with app.app_context():
-        pokemon = OwnerPokemon(pokemon_id_external_api=1, user_id=1, pokemon_name="test")
+        pokemon = OwnerPokemon(pokemon_id_external_api=1, user_id=1, pokemon_name="test",pokemon_species="test")
         db.session.add(pokemon)
         db.session.commit()
         pokemon_id = pokemon.pokemon_id  # pegar ID
 
     # Usar somente o ID na requisição
-    response = client.put("/owner_pokemon/",json={"pokemon_id": pokemon_id,"pokemon_id_external_api": 1, "user_id": 1,"pokemon_name":"test" })
+    response = client.put("/owner_pokemon",json={"pokemon_id": pokemon_id,"pokemon_id_external_api": 1, "user_id": 1,"pokemon_name":"test","pokemon_species":"test"})
     assert response.status_code == 200
 
 # ---------------- Teste DELETE ----------------
 def test_delete_owner_pokemon(client):
     # Criar usuário no contexto do app
     with app.app_context():
-        pokemon = OwnerPokemon(pokemon_id_external_api=1, user_id=1, pokemon_name="test")
+        pokemon = OwnerPokemon(pokemon_id_external_api=1, user_id=1, pokemon_name="test",pokemon_species="test")
         db.session.add(pokemon)
         db.session.commit()
         pokemon_id = pokemon.pokemon_id  # pegar ID
 
     # Usar somente o ID na requisição
     response = client.delete(
-        "/owner_pokemon/",
+        "/owner_pokemon",
         json={"pokemon_id": pokemon_id}
     )
     assert response.status_code == 200

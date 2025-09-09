@@ -14,6 +14,9 @@ class OwnerPokemon(db.Model):
     pokemon_id = db.Column(db.Integer, primary_key=True, autoincrement=True, 
                     info={"description": "chave primária dos pokemons capturados"})
     
+    pokemon_species = db.Column(db.String, nullable=False, 
+                    info={"description": "espécie do pokemon"})
+    
     pokemon_name = db.Column(db.String, nullable=False, 
                     info={"description": "nome do pokemon"})
     

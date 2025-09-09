@@ -1,5 +1,5 @@
 from flask_openapi3 import Tag, APIBlueprint
-from flask import jsonify
+from flask import jsonify,request
 from sqlalchemy import desc
 
 from ..database import db
@@ -11,10 +11,17 @@ from ..error_schema import ValidationErrorResponse
 owner_pokemon_api = APIBlueprint('owner_pokemon_api', __name__, url_prefix='/owner_pokemon')
 owner_pokemon_tag = Tag(name="Pokemon e seus Donos", description="Operação relacionando o pokemon e seu dono")
 
-@owner_pokemon_api.get('', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_All, "422": ValidationErrorResponse},
+@owner_pokemon_api.get('/user_id', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para puxar todos os pokemons adotados")
 def get_all_owner_pokemon():
-    owner_pokemon = OwnerPokemon.query.order_by(desc(OwnerPokemon.user_id)).all()
+    user_id = request.args.get('user_id')
+    #user = db.session.get(AccountUser, user_id)
+
+    #if not user:
+    #    return jsonify({"error": "Usuário não encontrado"}), 404
+    
+    owner_pokemon = OwnerPokemon.query.filter_by(user_id=user_id).all()
+
     result = [
         {k: v for k, v in user.__dict__.items() if not k.startswith('_')}
         for user in owner_pokemon
