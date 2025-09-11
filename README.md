@@ -1,19 +1,3 @@
-Passo a Passo para Criar novas Tabelas
-1. Criar a tabela e suas colunas no folder "table"
-2. Criar as variáveis no "schema.py"
-3. Criar as APIs de conexão com essa tabela no folder "apis"
-4. Adicionar os novos APIs, na aba "app"
-5. Criar o teste no folder "test"
-
-
-
-Para rodar todo o backend => python -m backend.app
-
-Para acessar a Documentação do Projeto -> http://127.0.0.1:5000/openapi
-
-
-
-
 # Backend Avançado Pokémon
 
 ## 🐱‍🏍 Descrição
@@ -28,7 +12,7 @@ Este é o módulo **API principal** de um sistema inspirado no universo Pokémon
 - Gerenciar habilidades (abilities) e Trainers
 - Conectar-se a serviços externos (ex: API pública Pokémon para dados adicionais)
 - Testes de rotas principais
-- Documentação automática via OpenAPI/Swagger
+- Documentação automática via OpenAPI/Swagger pelo ```bash http://127.0.0.1:5000/openapi
 
 ---
 
@@ -44,6 +28,7 @@ Este é o módulo **API principal** de um sistema inspirado no universo Pokémon
 ---
 
 ## 📂 Estrutura do Projeto
+```bash
 backend-avancado-pokemon/
 │
 ├── backend/ # Código fonte principal da API
@@ -103,7 +88,6 @@ backend-avancado-pokemon/
     ```bash
     python -m backend.app
 
-
 ### 🐳 Localmente (Com Docker)
 
 1. Certifique-se de ter Docker instalado e rodando, caso não tenha, instale o Docker.
@@ -123,11 +107,10 @@ backend-avancado-pokemon/
 4. Acesse via browser ou ferramenta de API:
     ```bash
     http://localhost:5000/openapi
-    
 
 ---
 
-### 🧭 Novas Tabelas / Rotas
+### 🧭 Adição de Novas Tabelas / Rotas
 
 Caso queira adicionar novos dados ou funcionalidade, siga este passo a passo:
 
