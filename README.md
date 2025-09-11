@@ -2,15 +2,13 @@
 
 ## 🐱‍🏍 Descrição
 
-Este é o módulo **API principal** de um sistema inspirado no universo Pokémon. Ele serve para gerenciar dados de Pokémons, habilidades e trainers, fornecendo endpoints REST para CRUD, além de consumir APIs externas ou microsserviços conforme necessário. Desenvolvido em Python com FastAPI/Flask (ou outro framework que você usou), com persistência em banco de dados.  
+Este é o módulo **API principal** de um sistema inspirado no universo Pokémon. Ele serve para gerenciar dados de Pokémons, fornecendo endpoints REST para CRUD, além de consumir APIs externas ou microsserviços conforme necessário. Desenvolvido em Python com Flask, com persistência em banco de dados.  
 
 ---
 
 ## 📦 Funcionalidades Principais
 
-- Listar, criar, atualizar e deletar Pokémons (`GET`, `POST`, `PUT`, `DELETE`)
-- Gerenciar habilidades (abilities) e Trainers
-- Conectar-se a serviços externos (ex: API pública Pokémon para dados adicionais)
+- Listar, criar, atualizar e deletar Pokémons, Usuários e Itens (`GET`, `POST`, `PUT`, `DELETE`)
 - Testes de rotas principais
 - Documentação automática via OpenAPI/Swagger pelo ```bash http://127.0.0.1:5000/openapi
 
@@ -19,8 +17,8 @@ Este é o módulo **API principal** de um sistema inspirado no universo Pokémon
 ## 💻 Tecnologias
 
 - Python  
-- FastAPI (ou Flask, dependendo do que você usou)  
-- SQLite / MySQL / PostgreSQL (dependendo de sua configuração)  
+- Flask 
+- SQLite
 - Docker  
 - GitHub para versionamento  
 - Dependências listadas no `requirements.txt`
@@ -28,30 +26,47 @@ Este é o módulo **API principal** de um sistema inspirado no universo Pokémon
 ---
 
 ## 📂 Estrutura do Projeto
-```bash
+```
 backend-avancado-pokemon/
 │
-├── backend/ # Código fonte principal da API
-│ ├── apis/ # Rotas / endpoints
-│ │ ├── pokemon_apis.py
-│ │ └── trainer_apis.py
-│ │
-│ ├── table/ # Modelos / definições de tabelas (schema)
-│ │ ├── pokemon_table.py
-│ │ └── trainer_table.py
-│ │
-│ ├── instance/ # Configurações de instância / ambiente
-│ │ └── config.py
-│ │
-│ ├── test/ # Testes unitários ou de endpoints
-│ │ └── test_pokemon.py
-│ │
-│ └── schema.py # Definições dos esquemas (pydantic ou marshmallow, etc.)
-│
-├── requirements.txt # Dependências do Python
-├── README.md
-└── Dockerfile # Containerização da API
+├── backend/                        # Código fonte principal da API
+│   ├── pokemon/                    # Módulo Pokémon
+│   │   ├── apis/                   # Rotas / endpoints da API
+│   │   │   ├── __init__.py
+│   │   │   ├── account_user_api.py
+│   │   │   ├── cash_audit_api.py
+│   │   │   ├── owner_pokemon_api.py
+│   │   │   └── user_bag_api.py
+│   │   │
+│   │   ├── tables/                 # Modelos / definições das tabelas do banco
+│   │   │   ├── __init__.py
+│   │   │   ├── account_user.py
+│   │   │   ├── cash_audit.py
+│   │   │   ├── owner_pokemon.py
+│   │   │   └── user_bag.py
+│   │   │
+│   │   ├── instance/               # Arquivos de configuração / banco de dados local
+│   │   │   └── database.db
+│   │   │
+│   │   ├── test/                   # Testes unitários ou de integração
+│   │   │   ├── __init__.py
+│   │   │   ├── account_user_test.py
+│   │   │   ├── cash_audit_test.py
+│   │   │   ├── owner_pokemon_test.py
+│   │   │   └── user_bag_test.py
+│   │   │
+│   │   ├── __init__.py             # Inicialização do pacote Python
+│   │   ├── schema.py               # Schemas Pydantic (validação de dados)
+│   │   ├── error_schema.py         # Schemas para erros e respostas padronizadas
+│   │   ├── database.py             # Conexão e manipulação do banco de dados
+│   │   ├── config.py               # Configurações gerais da aplicação
+│   │   └── app.py                  # Ponto de entrada da API (FastAPI / Flask)
+│   │
+│   ├── requirements.txt            # Dependências do Python
+│   ├── README.md                   # Documentação da API
+│   └── Dockerfile                  # Containerização da API
 
+```
 
 ---
 
@@ -59,9 +74,9 @@ backend-avancado-pokemon/
 
 ### Pré-requisitos
 
-- Python (versão X.X)  
+- Python
 - Docker (se for usar container)  
-- Banco de dados suportado (SQLite/MySQL/PostgreSQL)  
+- Banco de dados suportado (SQLite)  
 
 
 ### Localmente (sem Docker)
