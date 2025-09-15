@@ -91,9 +91,8 @@ backend-avancado-pokemon/
     python -m venv venv
 
 3. Ative um ambiente virtual
-    ```bash
-    source venv/bin/activate   # Linux/Mac
-    .\venv\Scripts\activate    # Windows
+    ```source venv/bin/activate   # Linux/Mac ```
+    ```.\venv\Scripts\activate    # Windows ```
 
 4. Instale as dependências
     ```bash
@@ -106,10 +105,9 @@ backend-avancado-pokemon/
 ### 🐳 Localmente (Com Docker)
 
 1. Certifique-se de ter Docker instalado e rodando, caso não tenha, instale o Docker.
-    ```bash
-    ● Windows: https://docs.docker.com/desktop/install/windows-install/
-    ● Ubuntu: https://docs.docker.com/engine/install/ubuntu/
-    ● Mac OS: https://docs.docker.com/desktop/install/mac-install/
+    ● Windows: ```https://docs.docker.com/desktop/install/windows-install/```
+    ● Ubuntu: ```https://docs.docker.com/engine/install/ubuntu/```
+    ● Mac OS: ```https://docs.docker.com/desktop/install/mac-install/```
 
 2. Na raiz do repositório, construa a imagem:
     ```bash
