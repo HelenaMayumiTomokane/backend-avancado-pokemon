@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  backend:
+    build: .
+    container_name: pokemon-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./pokemon:/app
+    depends_on:
+      - pokemon-db
+
+
+  frontend:
+    build: ../frontend
+    container_name: pokemon-frontend
+    ports:
+      - "3000:3000"   # React dev server
+    volumes:
+      - ../frontend/pokemon:/app   # monta seu código dentro do container
+      - /app/node_modules        # mantém node_modules do container
+    depends_on:
+      - backend
+
+
+  pokemon-db:
+    image: postgres:15
+    container_name: pokemon-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: pokemon
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

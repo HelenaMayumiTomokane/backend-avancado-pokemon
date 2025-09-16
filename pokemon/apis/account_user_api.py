@@ -69,7 +69,7 @@ def update_account_user(body: AccountUserSchema_All):
         return jsonify({"error": "Usuário não encontrado"}), 404
 
     for key, value in data.items():
-        if hasattr(user_obj, key):
+        if hasattr(user_obj, key) and value is not None:
             setattr(user_obj, key, value)
 
     db.session.commit()

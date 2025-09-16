@@ -52,7 +52,7 @@ def update_cash_audit(body: CashAuditSchema_All):
         return jsonify({"error": "pokemon não encontrado"}), 404
 
     for key, value in data.items():
-        if hasattr(pokemon_obj, key):
+        if hasattr(pokemon_obj, key) and value is not None:
             setattr(pokemon_obj, key, value)
 
     db.session.commit()
