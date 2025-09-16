@@ -1,6 +1,6 @@
 # Backend Avançado Pokémon
 
-## 🐱‍🏍 Descrição
+## 📖 Descrição
 
 Este é o módulo **API principal** de um sistema inspirado no universo Pokémon. Ele serve para gerenciar dados de Pokémons, fornecendo endpoints REST para CRUD. Desenvolvido em Python com Flask, com persistência em banco de dados.  
 
@@ -8,20 +8,23 @@ Este é o módulo **API principal** de um sistema inspirado no universo Pokémon
 
 ## 📦 Funcionalidades Principais
 
-- Listar, criar, atualizar e deletar Pokémons, Usuários e Itens (`GET`, `POST`, `PUT`, `DELETE`)
+- Listar, criar, atualizar e deletar Pokémons, Usuários, Cash e Itens (`GET`, `POST`, `PUT`, `DELETE`)
 - Testes de rotas principais
-- Documentação automática via OpenAPI/Swagger pelo ```bash http://127.0.0.1:5000/openapi
+- Documentação automática via OpenAPI/Swagger pelo 
+    ```bash 
+    http://127.0.0.1:5000/openapi
 
 ---
 
 ## 💻 Tecnologias
 
-- Python  
-- Flask 
-- SQLite
-- Docker  
-- GitHub para versionamento  
-- Dependências listadas no `requirements.txt`
+- 🐍 **Python**  
+- 🌐 **Flask**  
+- 🗄️ **SQLite**  
+- 🐳 **Docker**  
+- 🏷️ **GitHub** para versionamento  
+- 📦 Dependências listadas no `requirements.txt`
+
 
 ---
 
@@ -111,9 +114,14 @@ backend-avancado-pokemon/
    cd backend-avancado-pokemon
 
 2. Certifique-se de ter Docker instalado e rodando, caso não tenha, instale o Docker.
-    ● Windows: ```https://docs.docker.com/desktop/install/windows-install/```
-    ● Ubuntu: ```https://docs.docker.com/engine/install/ubuntu/```
-    ● Mac OS: ```https://docs.docker.com/desktop/install/mac-install/```
+    - Windows: 
+        https://docs.docker.com/desktop/install/windows-install/
+
+    - Ubuntu: 
+        https://docs.docker.com/engine/install/ubuntu/
+
+    - Mac OS: 
+        https://docs.docker.com/desktop/install/mac-in
 
 3. Na raiz do repositório, construa a imagem:
     ```bash
@@ -134,10 +142,15 @@ backend-avancado-pokemon/
    git clone https://github.com/HelenaMayumiTomokane/backend-avancado-pokemon.git
    cd backend-avancado-pokemon
 
-2. Certifique-se de ter Docker e Docker Compose instalados e rodando:  
-   - Windows: [Instalação do Docker Desktop](https://docs.docker.com/desktop/install/windows-install/)  
-   - Ubuntu: [Instalação do Docker Engine](https://docs.docker.com/engine/install/ubuntu/)  
-   - Mac OS: [Instalação do Docker Desktop](https://docs.docker.com/desktop/install/mac-install/)  
+2. Certifique-se de ter Docker instalado e rodando, caso não tenha, instale o Docker.
+    - Windows: 
+        https://docs.docker.com/desktop/install/windows-install/
+
+    - Ubuntu: 
+        https://docs.docker.com/engine/install/ubuntu/
+
+    - Mac OS: 
+        https://docs.docker.com/desktop/install/mac-in
 
 3. Na raiz do repositório, suba os serviços definidos no `docker-compose.yml`:  
    ```bash
