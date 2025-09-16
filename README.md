@@ -2,7 +2,7 @@
 
 ## 🐱‍🏍 Descrição
 
-Este é o módulo **API principal** de um sistema inspirado no universo Pokémon. Ele serve para gerenciar dados de Pokémons, fornecendo endpoints REST para CRUD, além de consumir APIs externas ou microsserviços conforme necessário. Desenvolvido em Python com Flask, com persistência em banco de dados.  
+Este é o módulo **API principal** de um sistema inspirado no universo Pokémon. Ele serve para gerenciar dados de Pokémons, fornecendo endpoints REST para CRUD. Desenvolvido em Python com Flask, com persistência em banco de dados.  
 
 ---
 
@@ -62,6 +62,7 @@ backend-avancado-pokemon/
 │   │   ├── config.py               # Configurações gerais da aplicação
 │   │   └── app.py                  # Ponto de entrada da API (FastAPI / Flask)
 │   │
+│   ├── docker-compose.yml          # Orquestração de containers da aplicação (API, banco de dados, etc.)
 │   ├── requirements.txt            # Dependências do Python
 │   ├── README.md                   # Documentação da API
 │   └── Dockerfile                  # Containerização da API
@@ -74,9 +75,10 @@ backend-avancado-pokemon/
 
 ### Pré-requisitos
 
-- Python
-- Docker (se for usar container)  
-- Banco de dados suportado (SQLite)  
+- 🐍 **Python** + **Flask** para o backend.
+- 🗄️ **SQLAlchemy** para banco de dados.
+- 🐳 **Docker** para containerização da aplicação (opcional, mas recomendado).
+- 📦 **Docker Compose** para orquestrar múltiplos containers (API + banco de dados e frontend).
 
 
 ### Localmente (sem Docker)
@@ -86,14 +88,14 @@ backend-avancado-pokemon/
    git clone https://github.com/HelenaMayumiTomokane/backend-avancado-pokemon.git
    cd backend-avancado-pokemon
 
-2. Crie um ambiente virtual
+2. Crie um Ambiente Virtual
     ```bash
-    python -m venv venv
+    py -m venv venv 
 
-3. Ative um ambiente virtual
-    ```source venv/bin/activate   # Linux/Mac ```
-    ```.\venv\Scripts\activate    # Windows ```
-
+3. Ativar o Ambiente Virtual => no Windows
+     ```bash 
+    venv\Scripts\Activate 
+    
 4. Instale as dependências
     ```bash
     pip install -r requirements.txt
@@ -103,36 +105,44 @@ backend-avancado-pokemon/
     python -m backend.app
 
 ### 🐳 Localmente (Com Docker)
+1. Clone este repositório  
+   ```bash
+   git clone https://github.com/HelenaMayumiTomokane/backend-avancado-pokemon.git
+   cd backend-avancado-pokemon
 
-1. Certifique-se de ter Docker instalado e rodando, caso não tenha, instale o Docker.
+2. Certifique-se de ter Docker instalado e rodando, caso não tenha, instale o Docker.
     ● Windows: ```https://docs.docker.com/desktop/install/windows-install/```
     ● Ubuntu: ```https://docs.docker.com/engine/install/ubuntu/```
     ● Mac OS: ```https://docs.docker.com/desktop/install/mac-install/```
 
-2. Na raiz do repositório, construa a imagem:
+3. Na raiz do repositório, construa a imagem:
     ```bash
     docker build -t backend-pokemon .
 
-3. Execute o container:
+4. Execute o container:
     ```bash
     docker run -d -p 5000:5000 backend-pokemon
 
-4. Acesse via browser ou ferramenta de API:
+5. Acesse via browser ou ferramenta de API:
     ```bash
     http://localhost:5000/openapi
 
----
 
-### 🧭 Adição de Novas Tabelas / Rotas
+### 🐳 Localmente (Com Docker Compose)
+1. Clone este repositório  
+   ```bash
+   git clone https://github.com/HelenaMayumiTomokane/backend-avancado-pokemon.git
+   cd backend-avancado-pokemon
 
-Caso queira adicionar novos dados ou funcionalidade, siga este passo a passo:
+2. Certifique-se de ter Docker e Docker Compose instalados e rodando:  
+   - Windows: [Instalação do Docker Desktop](https://docs.docker.com/desktop/install/windows-install/)  
+   - Ubuntu: [Instalação do Docker Engine](https://docs.docker.com/engine/install/ubuntu/)  
+   - Mac OS: [Instalação do Docker Desktop](https://docs.docker.com/desktop/install/mac-install/)  
 
-1. Criar a tabela com suas colunas no folder table/
+3. Na raiz do repositório, suba os serviços definidos no `docker-compose.yml`:  
+   ```bash
+   docker-compose up -d
 
-2. Criar as variáveis correspondentes no schema.py
-
-3. Criar APIs de conexão com essa tabela no folder apis/
-
-4. Adicionar o novo endpoint na aplicação principal (backend/app ou onde está o ponto de entrada)
-
-5. Criar um teste correspondente no folder test/
+4. Para parar os serviços:
+    ```bash
+    docker-compose down
