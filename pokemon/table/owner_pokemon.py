@@ -20,7 +20,7 @@ class OwnerPokemon(db.Model):
     pokemon_name = db.Column(db.String, nullable=False, 
                     info={"description": "nome do pokemon"})
     
-    user_id = db.Column(db.Integer, nullable=False, 
+    user_id = db.Column(db.Integer, db.ForeignKey('account_user.user_id'), nullable=False, 
                     info={"description": "id do usuário que capturou o pokemon"})
     
     pokemon_id_external_api = db.Column(db.Integer, nullable=False, 

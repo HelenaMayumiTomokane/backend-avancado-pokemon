@@ -26,6 +26,12 @@ class AccountUser(db.Model):
     
     role = db.Column(db.String, nullable=False,
                     info={"description": "definição de administrador ou visitante"})
+    
+    # Relacionamentos do usuário com cascade para deleção automática
+    user_bag = db.relationship("UserBag", backref="user", cascade="all, delete-orphan", lazy=True)
+    cash_audit = db.relationship("CashAudit", backref="user", cascade="all, delete-orphan", lazy=True)
+    owner_pokemons = db.relationship("OwnerPokemon", backref="user", cascade="all, delete-orphan", lazy=True)
+
 
     def __init__(self, **kwargs):
         for key, value in kwargs.items():

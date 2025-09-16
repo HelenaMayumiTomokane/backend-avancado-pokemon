@@ -17,7 +17,7 @@ class CashAudit(db.Model):
     operation_type = db.Column(db.String, nullable=False, 
                     info={"description": "descrição se a operação é um input ou output"})
     
-    user_id = db.Column(db.Integer, nullable=False, 
+    user_id = db.Column(db.Integer, db.ForeignKey('account_user.user_id'), nullable=False, 
                     info={"description": "id do usuário que capturou o pokemon"})
     
     value = db.Column(db.Float, nullable=False, 
