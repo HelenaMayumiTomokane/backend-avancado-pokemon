@@ -135,7 +135,6 @@ backend-avancado-pokemon/
     ```bash
     http://localhost:5000/openapi
 
-
 ### 🐳 Localmente (Com Docker Compose)
 1. Clone este repositório  
    ```bash
