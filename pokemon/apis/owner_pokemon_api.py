@@ -1,6 +1,6 @@
 from flask_openapi3 import Tag, APIBlueprint
 from flask import jsonify,request
-from sqlalchemy import desc
+from pydantic import BaseModel, Field
 
 from ..database import db
 from ..table.owner_pokemon import OwnerPokemon
@@ -11,10 +11,14 @@ from ..error_schema import ValidationErrorResponse
 owner_pokemon_api = APIBlueprint('owner_pokemon_api', __name__, url_prefix='/owner_pokemon')
 owner_pokemon_tag = Tag(name="Pokemon e seus Donos", description="Operação relacionando o pokemon e seu dono")
 
+# Definição do schema de query parameter
+class UserIdQuery(BaseModel):
+    user_id: int = Field(..., description="ID do usuário")
+
 @owner_pokemon_api.get('/user_id', tags=[owner_pokemon_tag],responses={"200": OwnerPokemonSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para puxar todos os pokemons adotados")
-def get_all_owner_pokemon():
-    user_id = request.args.get('user_id')
+def get_all_owner_pokemon(query: UserIdQuery):
+    user_id = query.user_id
     #user = db.session.get(AccountUser, user_id)
 
     #if not user:

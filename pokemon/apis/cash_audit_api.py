@@ -1,6 +1,6 @@
 from flask_openapi3 import Tag, APIBlueprint
 from flask import jsonify,request
-from sqlalchemy import desc
+from pydantic import BaseModel, Field
 
 from ..database import db
 from ..table.cash_audit import CashAudit
@@ -11,10 +11,14 @@ from ..error_schema import ValidationErrorResponse
 cash_audit_api = APIBlueprint('cash_audit_api', __name__, url_prefix='/cash_audit')
 cash_audit_tag = Tag(name="Histórico de Cash", description="Entradas e saídas de dinheiro Pokemon")
 
+# Definição do schema de query parameter
+class UserIdQuery(BaseModel):
+    user_id: int = Field(..., description="ID do usuário")
+
 @cash_audit_api.get('/user_id', tags=[cash_audit_tag],responses={"200": CashAuditSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para puxar todos os item")
-def get_all_cash_audit():
-    user_id = request.args.get('user_id')
+def get_all_cash_audit(query: UserIdQuery):
+    user_id = query.user_id
     cash_audit = CashAudit.query.filter_by(user_id=user_id).all()
     result = [
         {k: v for k, v in user.__dict__.items() if not k.startswith('_')}

@@ -1,6 +1,6 @@
 from flask_openapi3 import Tag, APIBlueprint
 from flask import jsonify,request
-from sqlalchemy import desc
+from pydantic import BaseModel, Field
 
 from ..database import db
 from ..table.account_user import AccountUser
@@ -10,25 +10,18 @@ from ..error_schema import ValidationErrorResponse
 account_user_api = APIBlueprint('account_user_api', __name__, url_prefix='/account_user')
 account_user_tag = Tag(name="Usuários", description="Operações relacionadas aos usuários")
 
-@account_user_api.get('/login_password', tags=[account_user_tag],responses={"200": AccountUserSchema_All, "422": ValidationErrorResponse},
-    summary="Buscar usuário pelo login e password")
-def get_account_user_by_login_password():
-    login = request.args.get('login')
-    password = request.args.get('password')
+# Definição do schema de query parameter
+class UserIdQuery(BaseModel):
+    user_id: int = Field(..., description="ID do usuário")
 
-    user = AccountUser.query.filter_by(login=login, password=password).first()
-
-    if not user:
-        return jsonify({"error": "Usuário não encontrado ou senha incorreta"}), 404
-
-    result = {k: v for k, v in user.__dict__.items() if not k.startswith('_')}
-    return jsonify(result)
-
+class LoginPasswordQuery(BaseModel):
+    login: str = Field(..., description="Login do usuário")
+    password: str = Field(..., description="Senha do usuário")
 
 @account_user_api.get('/user_id', tags=[account_user_tag],responses={"200": AccountUserSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para puxar os dados de usuários")
-def get_account_user_by_id():
-    user_id = request.args.get('user_id')
+def get_account_user_by_id(query: UserIdQuery):
+    user_id = query.user_id
     user = db.session.get(AccountUser, user_id)
 
     if not user:
@@ -37,6 +30,19 @@ def get_account_user_by_id():
     result = {k: v for k, v in user.__dict__.items() if not k.startswith('_')}
     return jsonify(result)
 
+@account_user_api.get('/login_password', tags=[account_user_tag],responses={"200": AccountUserSchema_All, "422": ValidationErrorResponse},
+    summary="Buscar usuário pelo login e password")
+def get_account_user_by_login_password(query: LoginPasswordQuery):
+    login = query.login
+    password = query.password
+
+    user = AccountUser.query.filter_by(login=login, password=password).first()
+
+    if not user:
+        return jsonify({"error": "Usuário não encontrado ou senha incorreta"}), 404
+
+    result = {k: v for k, v in user.__dict__.items() if not k.startswith('_')}
+    return jsonify(result)
 
 @account_user_api.post('', tags=[account_user_tag],responses={"200": AccountUserSchema_No_Auto, "422": ValidationErrorResponse},
          summary="Requisição para cadastrar novos usuários")

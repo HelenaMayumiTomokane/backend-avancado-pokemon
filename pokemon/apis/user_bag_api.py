@@ -1,6 +1,6 @@
 from flask_openapi3 import Tag, APIBlueprint
 from flask import jsonify,request
-from sqlalchemy import desc
+from pydantic import BaseModel, Field
 
 from ..database import db
 from ..table.user_bag import UserBag
@@ -11,10 +11,14 @@ from ..error_schema import ValidationErrorResponse
 user_bag_api = APIBlueprint('user_bag_api', __name__, url_prefix='/user_bag')
 user_bag_tag = Tag(name="Itens na Bag", description="Itens disponíveis ou consumidos da Bag")
 
+# Definição do schema de query parameter
+class UserIdQuery(BaseModel):
+    user_id: int = Field(..., description="ID do usuário")
+
 @user_bag_api.get('/user_id', tags=[user_bag_tag],responses={"200": UserBagSchema_All, "422": ValidationErrorResponse},
          summary="Requisição para puxar todos os item")
-def get_all_user_bag():
-    user_id = request.args.get('user_id')
+def get_all_user_bag(query: UserIdQuery):
+    user_id = query.user_id
     user_bag = UserBag.query.filter_by(user_id=user_id).all()
     result = [
         {k: v for k, v in user.__dict__.items() if not k.startswith('_')}
